@@ -47,7 +47,7 @@ public class BiggestNumber {
 				a[j]= num/100;
 				System.out.println(num+"/100 = "+num/100);
 				
-				if(num%100/10==0) {
+				if(num%100==0) {
 					b[j]= -999;
 				}else {
 					b[j]= num%100/10;
