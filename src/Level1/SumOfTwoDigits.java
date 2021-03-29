@@ -16,7 +16,7 @@ a	b	return
 3	3	3
 5	3	12
  */
-public class SumBetweenTwoDigits {
+public class SumOfTwoDigits {
 	public static void main(String[] args) {
 		System.out.println(sumBTWtwo(5, 1));
 	}
