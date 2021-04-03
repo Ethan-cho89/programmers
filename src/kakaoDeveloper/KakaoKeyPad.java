@@ -1,4 +1,4 @@
-package Level1;
+package kakaoDeveloper;
 
 /*
 [카카오 인턴] 키패드 누르기

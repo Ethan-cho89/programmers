@@ -1,4 +1,4 @@
-package Level1;
+package kakaoDeveloper;
 /*
 [신규 아이디 추천]
 문제 설명
