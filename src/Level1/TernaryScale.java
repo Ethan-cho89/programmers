@@ -29,6 +29,59 @@ n (10진법)	n (3진법)	앞뒤 반전(3진법)	10진법으로 표현
 
 public class TernaryScale {
 	public static void main(String[] args) {
+		System.out.println(reverse(125));
+		System.out.println(toDecimalNumber(reverse(125)));
+		
+		
+		
 		
 	}
+	
+	
+	public static String reverse(int n) { // 10진수를 받아서 3진수 역순으로 한번에 만들기
+		String reverse = "";
+		while(n!=0) {
+			if((n%3)<10) {
+				reverse = reverse+ (n%3);
+				n/=3;
+			}
+		}
+		return reverse;
+	}
+
+	public static int toDecimalNumber(String s) {
+		char[] cArray = s.toCharArray();
+		int answer = 0;
+		int cnt = 0;
+		for(int i=cArray.length-1; i>=0; i--) {
+			answer += Integer.parseInt(cArray[i]+"")*Math.pow(3,cnt++);
+		}
+		return answer;
+	}
+	
+	
+    public static String toDeposition(int value, int i){
+
+        String returnString = "";
+        String temp = "";
+
+        while(value != 0){
+
+            // 나머지가 0~9 사이이면  캐릭터 값을 배열에 저장
+            if( (value % i) < 10 ) {
+                //문자열 우->좌로 배열
+                returnString = (value % i) + returnString;
+                //몫을 구함
+                value /= i;
+            }
+            // 나머지가 10 이상이면 해당하는 값의 알파벳을 저장
+            else {
+                int temp1 = (char)((value % i)  + 55);
+                returnString = Integer.toString(temp1) + returnString;
+            }
+        }
+        return returnString;
+    }
+
 }
+	
