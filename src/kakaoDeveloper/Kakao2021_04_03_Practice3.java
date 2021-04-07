@@ -1,6 +1,8 @@
 package kakaoDeveloper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 /*
  * 
@@ -53,7 +55,7 @@ train_2.png
 
 5번 역을 종착역으로 정하면 열차는 1번 역 → 5번 역 → 1번 역 → ... 과 같이 움직입니다. 1번, 5번 역의 일일 이용객 수의 합은 5명이고, 이때가 최대입니다.
  */
-public class Practice3 {
+public class Kakao2021_04_03_Practice3 {
 	public static void main(String[] args) {
 		int[] passenger1	= {1,1,1,1,1,1};
 		int[][] train1 = {{1,2},{1,3},{1,4},{3,5},{3,6}};	
@@ -64,38 +66,77 @@ public class Practice3 {
 		int[] passenger3	= {1,1,2,3,4};
 		int[][] train3 = {{1,2},{1,3},{1,4},{1,5}};
 		
-		moving(6,passenger1, train1);
-//		moving(4,passenger2, train2);
-//		moving(5,passenger3, train3);
+		checkTrain(6,passenger1, train1);
+		
+		checkTrain(4,passenger2, train2);
+		checkTrain(5,passenger3, train3);
 		
 	}
 	
-	public static int[] moving(int n, int[] passenger, int[][] train) {
+	public static int[] checkTrain(int n, int[] passenger, int[][] train) {
 		int[] answer = new int[2];
-		int sum = 0;
-		int index = 0;
-		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		int max =0; // 가장 사람이 많이 타는 조합의 결과값 (번호의 경우의 수마다 검토) 
+		int lastStation = 0; // 맥스 값이 바뀔때 마지막 정류장 정보 저장
+		int last=0; // 매 조회마다의 마지막 정류장 정보 
+		int temp=0;
+		int tempIndex=0;
+		Stack<Integer> st = new Stack<Integer>();
 		
+		String stations ="1"; //경우의 수 조합
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		boolean hasNext = true;
+		boolean checkAgain = false;
+		
+		int total =0;
 		for(int i=0; i<train.length; i++) {
-			if(train[i][0]==1) { //첫번째랑 두번째 역 이용하는 승객 더하기
-				sum += passenger[train[i][0]-1];
-				sum += passenger[train[i][1]-1];
-			}
-			for(int k=0; k<train.length; k++) {
-				if(train[i][1]==train[k][0]) {
-					if(train[k][1]==0) {
-						continue;
+			if(train[i][0]==1) { // 출발지라면 다음 정거장을 매개변수로 주고 재귀메소드로 이어지는 정거장 다 찾아오기
+									// 얘가 시작 정거장인 애를 찾고 또 걔랑 이어지는 애가 시작 정거장인 애를 찾고... 찾.. ㅊ...
+				temp = train[i][1];
+				stations+= temp;
+				hasNext = true;
+				for(int j=0; j<train.length; j++) {
+					System.out.println("station에 마지막 저장된 애 : " +stations.charAt(stations.length()-1));
+					if(temp==train[j][0]) { //저번의 마지막과 이번의 시작이 같은가?
+						temp=train[j][1];
+						stations+=temp;
+						tempIndex=j;
+						j=0;
+						hasNext=true;
+						checkAgain=true;
+					}else if(j==train.length-1) { // 마지막까지 찾았는데 없으면 
+						hasNext= false;
 					}
-					sum+= passenger[train[k][1]-1];
-					train[k][1]=0;
-					i=k;
-					index=k;
-					k=0;
+					if(!hasNext) { // 마지막까지 갔을때 이어지는 정류장이 없으면 출발역 정보를 0으로 만들어서 검색 안되도록 한다
+						train[tempIndex][0] = 0;
+					}
 				}
+				System.out.println("stations = "+stations);
+				char[] people = stations.toCharArray();
+				for(char c : people) {
+					System.out.println("c = "+c);
+					total+= passenger[Integer.parseInt(c+"")-1];
+				}
+				if(max<=total) { // 이번 조합의 최대 승객 수가 같거나 크다면
+					max=total;
+					last = Integer.parseInt(people[people.length-1]+"");
+					if(lastStation<last) {
+						lastStation=last;
+					}
+				}
+				System.out.println("Max = "+max+" // total = "+total);
+				total=0;
+				stations="1";
 			}
-			map.put(train[index][1],sum);
+			if(checkAgain) { //한번이라도 다른 정류장을 만나면 다시 돌아가서 검사하기
+				 checkAgain = false;
+				 i=0;
+			}
 		}
+		System.out.println("답은 "+ last + " // "+max);
+		answer[0]=lastStation;
+		answer[1]=max;
 		
 		return answer;
 	}
+	
 }

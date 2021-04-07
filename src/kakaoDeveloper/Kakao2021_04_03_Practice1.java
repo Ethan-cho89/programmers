@@ -38,7 +38,7 @@ gift_cards		wants			result
 입출력 예 #2
 네 번째, 다섯 번째 사람만 교환을 통해 자신이 원하는 상품을 받을 수 있으며, 나머지 세 명은 원하는 상품을 받을 수 없습니다.
  */
-public class Practice1 {
+public class Kakao2021_04_03_Practice1 {
 	public static void main(String[] args) {
 		int[] gift_cards = {5, 7, 10, 4, 5, 4, 5};
 		int[] wants = {1, 2, 3, 5, 4, 8, 6};

@@ -49,7 +49,7 @@ needs																	r	result
 앞서 설명한 예시와 같습니다.
  */
 
-public class Practice2 {
+public class Kakao2021_04_03_Practice2 {
 	public static void main(String[] args) {
 		int[][] needs = {{0, 1, 0}, {0, 1, 0}, {0, 0, 1}, {1, 0, 1}, {0, 1, 0}, {0, 1, 1}};
 		howMany(needs,2);
